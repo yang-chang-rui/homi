@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/homi.dir/main.c.o -o homi 
