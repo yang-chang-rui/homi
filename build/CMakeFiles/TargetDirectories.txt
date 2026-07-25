@@ -1,3 +1,0 @@
-/root/homi/build/CMakeFiles/homi.dir
-/root/homi/build/CMakeFiles/edit_cache.dir
-/root/homi/build/CMakeFiles/rebuild_cache.dir
