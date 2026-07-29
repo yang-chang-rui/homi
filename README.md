@@ -49,8 +49,7 @@ Our goal is to offer a feature-rich experience comparable to **Home Assistant (H
 ### Community & Support
 
 - [GitHub Issues](https://github.com/yourusername/homi/issues) – report bugs or suggest features
-- [Discord](https://discord.gg/your-invite-link) – real‑time chat
-- [Email](mailto:your@email.com) – official contact
+- [Email](print_114514@outlook.com) – official contact
 
 ---
 
@@ -99,5 +98,4 @@ HOMI 是一个专为 Linux 环境打造的 IoT 解决方案，核心追求是**�
 ### 社区与支持
 
 - [GitHub Issues](https://github.com/yourusername/homi/issues) – 报告 Bug 或提出建议
-- [Discord 群组](https://discord.gg/your-invite-link) – 实时交流
-- [邮件](mailto:your@email.com) – 官方联系渠道
+- [邮件](print_114514@outlook.com) – 官方联系渠道
