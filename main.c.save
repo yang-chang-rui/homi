@@ -1,40 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dlfcn.h>
-#include <dirent.h>
 
-
-
-//setting plugin_out
-char *plugin_scan_out = NULL;
 
 
 
 int plugin_scan(char *path) {
-    DIR *dir = opendir(path);
-    if (dir == NULL) {
+    DIR *plugin_scan_dir = opendir(path);
+    if (plugin_scan_dir == NULL) {
         return 1;
     }
 
-    FILE *out = fopen("./tmp/plugin_list.txt", "w");
-    if (out == NULL) {
-        closedir(dir);
+    FILE *plugin_scan_out = fopen("./tmp/plugin_list.txt", "w");
+    if (plugin_scan_out == NULL) {
+        closedir(plugin_scan_dir);
         return 1;
     }
 
-    struct dirent *entry;
-    while ((entry = readdir(dir)) != NULL) {
-        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+    struct dirent *plugin_scan_entry;
+    while ((plugin_scan_entry = readdir(plugin_scan_dir)) != NULL) {
+        if (strcmp(plugin_scan_entry->d_name, ".") == 0 || strcmp(plugin_scan_entry->d_name, "..") == 0) {
             continue;
         }
-        if (strstr(entry->d_name, ".so") != NULL) {
-            fprintf(out, "%s,", entry->d_name);
+        if (strstr(plugin_scan_entry->d_name, ".so") != NULL) {
+            fprintf(plugin_scan_out, "%s,", plugin_scan_entry->d_name);
         }
     }
-    fprintf(out, "NULL");
-    fclose(out);
-    closedir(dir);
+    fprintf(plugin_scan_out, "NULL");
+    fclose(plugin_scan_out);
+    closedir(plugin_scan_dir);
     return 0;
 }
 
@@ -87,6 +78,7 @@ int main(int argc, char *argv[]) {
     }
 
     plugin_scan("./plugin");
+    plugin_use("./plugin/example.so");
 
     return 0;
 }
