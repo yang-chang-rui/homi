@@ -10,7 +10,6 @@
 char *plugin_scan_out = NULL;
 
 
-
 int plugin_scan(char *path) {
     DIR *dir = opendir(path);
     if (dir == NULL) {
