@@ -5,9 +5,13 @@
 #include <dirent.h>
 
 
+//I think I can create a function to init
 
 //setting plugin_out
 char *plugin_scan_out = NULL;
+char *version = "0.0.1";
+int debug = 0;
+
 
 
 int plugin_scan(char *path) {
@@ -61,8 +65,6 @@ static int plugin_use(char *path) {
 }
 
 int main(int argc, char *argv[]) {
-    int debug = 0;
-    char *version = "0.0.1";
 
     if (argc > 1) {
         for (int argv_loop = 1; argv_loop < argc; argv_loop++) {
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (debug) {
-        printf("debug:plugin:start\n");
+        printf("debug:plugin_system:start\n");
     }
 
     plugin_scan("./plugin");
