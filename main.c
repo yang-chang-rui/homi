@@ -9,32 +9,33 @@ int debug = 0;
 
 int plugin_scan(char *path, int debug){
 
-  if (debug == 1){
-    printf("system:plugin:scan\n");
-  }
-
-  DIR *dir = opendir(path);
-
-  if (dir == NULL){
-    printf("system:plugin:scan:error:dir_null\n");
-    return 1;
-  }
-
-  struct dirent *plugin_scan_entry_tmp;
-
-  while ((plugin_scan_entry_tmp = readdir(dir)) != NULL){
-    int plugin_scan_entry_len_tmp = strlen(plugin_scan_entry_tmp -> d_name);
-    if (plugin_scan_entry_len_tmp >= 3 && strcmp(plugin_scan_entry_tmp -> d_name + plugin_scan_entry_len_tmp - 3, ".so") == 0){
-	if (debug == 1){
-	  printf("system:plugin:scan:plugin:%s\n", plugin_scan_entry_tmp -> d_name);
-	}
+    if (debug == 1){
+        printf("system:plugin:scan\n");
     }
 
-  }
+    DIR *dir = opendir(path);
 
-  closedir(dir);
+    if (dir == NULL){
+        printf("system:plugin:scan:error:dir_null\n");
+        return 1;
+    }
 
-  return 0;
+    struct dirent *plugin_scan_entry_tmp;
+
+    while ((plugin_scan_entry_tmp = readdir(dir)) != NULL){
+        int plugin_scan_entry_len_tmp = strlen(plugin_scan_entry_tmp -> d_name);
+        if (plugin_scan_entry_len_tmp >= 3 && strcmp(plugin_scan_entry_tmp -> d_name + plugin_scan_entry_len_tmp - 3, ".so") == 0){
+            if (debug == 1){
+                printf("system:plugin:scan:plugin:%s\n", plugin_scan_entry_tmp -> d_name);
+            }
+        
+        }
+
+    }
+
+    closedir(dir);
+
+    return 0;
 }
 
 
