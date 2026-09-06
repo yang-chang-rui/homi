@@ -33,15 +33,15 @@ Our goal is to offer a feature-rich experience comparable to **Home Assistant (H
 #### Plugin Development (brief)
 
 - Write plugins in Python or C (other languages upon request)
-- Provide a `manifest.json` describing your plugin
-- Implement the standard interface: `init()`, `run()`, `stop()`
+- Provide a `Undecided` describing your plugin
+- Implement the standard interface: `iUndecided`
 - Memory footprint must not exceed 20 MB
 
 ### Performance Comparison
 
 | Project          | Min. RAM | Main Language | Use Case                           |
 | ---------------- | -------- | ------------- | ---------------------------------- |
-| **HOMI**         | < 50 MB  | C / Python    | Resource‑constrained embedded     |
+| **HOMI**         | < 50 MB  | C              | Resource‑constrained embedded     |
 | Home Assistant   | ≥ 1.5 GB | Python        | Full‑featured home servers        |
 | Domoticz         | ~ 50 MB  | C++           | Lightweight smart home             |
 | openHAB          | ~ 500 MB | Java          | Industrial‑grade integration       |
@@ -68,9 +68,7 @@ HOMI 是一个专为 Linux 环境打造的 IoT 解决方案，核心追求是**�
 
 - **内存优先** – 运行时内存占用低于 128 MB（目标 < 64 MB）
 - **插件化** – 通过社区仓库 `homi_ce` 轻松扩展功能
-- **原生 Linux** – 支持主流发行版，无需额外虚拟化
 - **快速启动** – 从冷启动到服务就绪仅需数秒
-- **安全可靠** – 所有插件经过审核，保证系统稳定性
 
 ### 如何贡献
 
@@ -82,15 +80,15 @@ HOMI 是一个专为 Linux 环境打造的 IoT 解决方案，核心追求是**�
 #### 插件开发规范（简述）
 
 - 使用 Python 或 C 编写（其他语言请提前沟通）
-- 提供 `manifest.json` 描述插件信息
-- 实现标准接口 `init()`、`run()`、`stop()`
+- 提供 `未定` 描述插件信息
+- 实现标准接口:`未定`
 - 内存占用不得超过 20 MB
 
 ### 性能对比
 
 | 项目          | 最低内存占用 | 主要语言 | 适用场景               |
 | ------------- | ------------ | -------- | ---------------------- |
-| **HOMI**      | < 50 MB      | C/Python | 资源受限的嵌入式设备   |
+| **HOMI**      | < 50 MB      | C | 资源受限的嵌入式设备   |
 | Home Assistant| ≥ 1.5 GB     | Python   | 功能全面的家庭服务器   |
 | Domoticz      | ~ 50 MB      | C++      | 轻量级智能家居         |
 | openHAB       | ~ 500 MB     | Java     | 工业级集成             |
