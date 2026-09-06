@@ -32,7 +32,7 @@ Our goal is to offer a feature-rich experience comparable to **Home Assistant (H
 
 #### Plugin Development (brief)
 
-- Write plugins in Python or C (other languages upon request)
+- Write plugins in C (other languages upon request)
 - Provide a `Undecided` describing your plugin
 - Implement the standard interface: `iUndecided`
 - Memory footprint must not exceed 20 MB
@@ -79,7 +79,7 @@ HOMI 是一个专为 Linux 环境打造的 IoT 解决方案，核心追求是**�
 
 #### 插件开发规范（简述）
 
-- 使用 Python 或 C 编写（其他语言请提前沟通）
+- 使用 C 编写（其他语言请提前沟通）
 - 提供 `未定` 描述插件信息
 - 实现标准接口:`未定`
 - 内存占用不得超过 20 MB
