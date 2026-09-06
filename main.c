@@ -1,75 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dlfcn.h>
 #include <dirent.h>
+#include <stdio.h>
+#include <string.h>
 
 
-//I think I can create a function to init
 
-//setting plugin_out
-char *plugin_scan_out = NULL;
-char *version = "0.0.1";
+char *version = "0.0.2";
 int debug = 0;
 
+int plugin_scan(char *path, int debug){
 
+  if (debug == 1){
+    printf("system:plugin:scan\n");
+  }
 
-int plugin_scan(char *path) {
-    DIR *dir = opendir(path);
-    if (dir == NULL) {
-        return 1;
+  DIR *dir = opendir(path);
+
+  if (dir == NULL){
+    printf("system:plugin:scan:error:dir_null\n");
+    return 1;
+  }
+
+  struct dirent *plugin_scan_entry_tmp;
+
+  while ((plugin_scan_entry_tmp = readdir(dir)) != NULL){
+    int plugin_scan_entry_len_tmp = strlen(plugin_scan_entry_tmp -> d_name);
+    if (plugin_scan_entry_len_tmp >= 3 && strcmp(plugin_scan_entry_tmp -> d_name + plugin_scan_entry_len_tmp - 3, ".so") == 0){
+	if (debug == 1){
+	  printf("system:plugin:scan:plugin:%s\n", plugin_scan_entry_tmp -> d_name);
+	}
     }
 
-    FILE *out = fopen("./tmp/plugin_list.txt", "w");
-    if (out == NULL) {
-        closedir(dir);
-        return 1;
-    }
+  }
 
-    struct dirent *entry;
-    while ((entry = readdir(dir)) != NULL) {
-        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
-            continue;
-        }
-        if (strstr(entry->d_name, ".so") != NULL) {
-            fprintf(out, "%s,", entry->d_name);
-        }
-    }
-    fprintf(out, "NULL");
-    fclose(out);
-    closedir(dir);
-    return 0;
+  closedir(dir);
+
+  return 0;
 }
 
-static int plugin_use(char *path) {
-    void *plugin_use_tmp;
-    int (*plugin_init)(void);
-
-    plugin_use_tmp = dlopen(path, RTLD_NOW);
-    if (!plugin_use_tmp) {
-        printf("system:plugin_use:error:%s\n", dlerror());
-        return 1;
-    }
-
-    plugin_init = dlsym(plugin_use_tmp, "init");
-    if (plugin_init) {
-        plugin_init();
-    } else {
-        printf("system:plugin_use:error:no init\n");
-        dlclose(plugin_use_tmp);
-        return 1;
-    }
-
-    dlclose(plugin_use_tmp);
-    return 0;
-}
 
 int main(int argc, char *argv[]) {
 
     if (argc > 1) {
         for (int argv_loop = 1; argv_loop < argc; argv_loop++) {
             if (strcmp(argv[argv_loop], "-h") == 0) {
-                printf("help:\n  -h   help\n  -d  debug\nsystem:version:0.0.1\n");
+                printf("help:\n  -h   help\n  -d  debug\n  -v  version\nsystem:version:0.0.1\n");
                 return 0;
             }
             if (strcmp(argv[argv_loop], "-d") == 0) {
@@ -87,7 +61,7 @@ int main(int argc, char *argv[]) {
         printf("debug:plugin_system:start\n");
     }
 
-    plugin_scan("./plugin");
+    plugin_scan("./plugin",debug);
 
     return 0;
 }
