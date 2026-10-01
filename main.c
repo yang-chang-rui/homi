@@ -1,7 +1,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <sys/stat.h>
 
 
 char *version = "0.0.2";
@@ -17,25 +17,44 @@ int plugin_scan(char *path, int debug){
 
     if (dir == NULL){
         printf("system:plugin:scan:error:dir_null\n");
+        if (debug == 1){
+            printf("system:plugin:scan:error:output_path_null:path:%s\n", path);
+        }
         return 1;
     }
 
     struct dirent *plugin_scan_entry_tmp;
-
+    FILE *plugin_scan_entry_file_tmp = fopen("./homi_plugin_tmp/plugin_scan_entry.txt", "w");
+    if (plugin_scan_entry_file_tmp == NULL){
+        printf("system:plugin:scan:error:file_null\n");
+        closedir(dir);
+        return 1;
+    }
+   
     while ((plugin_scan_entry_tmp = readdir(dir)) != NULL){
         int plugin_scan_entry_len_tmp = strlen(plugin_scan_entry_tmp -> d_name);
         if (plugin_scan_entry_len_tmp >= 3 && strcmp(plugin_scan_entry_tmp -> d_name + plugin_scan_entry_len_tmp - 3, ".so") == 0){
             if (debug == 1){
                 printf("system:plugin:scan:plugin:%s\n", plugin_scan_entry_tmp -> d_name);
             }
-        
+        fprintf(plugin_scan_entry_file_tmp, "%s;", plugin_scan_entry_tmp -> d_name); 
         }
-
+        
     }
-
+    fclose(plugin_scan_entry_file_tmp);
     closedir(dir);
 
     return 0;
+}
+
+char *plugin_read(char *path, int debug){
+    (void)path;
+
+    if (debug == 1){
+        printf("system:plugin:read\n");
+    }
+
+    return NULL;
 }
 
 
@@ -44,7 +63,7 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
         for (int argv_loop = 1; argv_loop < argc; argv_loop++) {
             if (strcmp(argv[argv_loop], "-h") == 0) {
-                printf("help:\n  -h   help\n  -d  debug\n  -v  version\nsystem:version:0.0.1\n");
+                printf("help:\n  -h   help\n  -d  debug\n  -v  version\nsystem:version:%s\n", version);
                 return 0;
             }
             if (strcmp(argv[argv_loop], "-d") == 0) {
