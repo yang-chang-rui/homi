@@ -47,13 +47,47 @@ int plugin_scan(char *path, int debug){
     return 0;
 }
 
-char *plugin_read(char *path, int debug){
+char *plugin_read(char *path, int plugin_read_number, int debug){
     (void)path;
 
     if (debug == 1){
         printf("system:plugin:read\n");
     }
 
+    FILE *read_plugin_entry_file_tmp = fopen("./homi_plugin_tmp/plugin_scan_entry.txt", "r");
+    if (read_plugin_entry_file_tmp == NULL){
+        printf("system:plugin:read:error:file_null\n");
+        return NULL;
+    }
+
+    //"\0"and";"
+    static char plugin_read_entry_out[53];
+
+    int plugin_read_entry_out_char_tmp;
+    int plugin_read_entry_out_char_number_tmp = 0;
+    int plugin_read_entry_out_number_tmp = 0;
+    int plugin_read_entry_out_found = 0;
+
+    while ((plugin_read_entry_out_char_tmp = fgetc(read_plugin_entry_file_tmp)) != EOF){
+
+        if (plugin_read_entry_out_char_tmp == ';'){
+            plugin_read_entry_out[plugin_read_entry_out_char_number_tmp] = '\0';
+            if (plugin_read_number == plugin_read_entry_out_number_tmp) {
+                printf("system:plugin:read:plugin:%s\n", plugin_read_entry_out);
+                plugin_read_entry_out_found = 1;
+            }
+            plugin_read_entry_out_char_number_tmp = 0;
+            plugin_read_entry_out_number_tmp++;
+        } else {
+            plugin_read_entry_out[plugin_read_entry_out_char_number_tmp] = plugin_read_entry_out_char_tmp;
+            plugin_read_entry_out_char_number_tmp++;
+        }
+    }
+
+    fclose(read_plugin_entry_file_tmp);
+    if (plugin_read_entry_out_found) {
+        return plugin_read_entry_out;
+    }
     return NULL;
 }
 
@@ -82,6 +116,8 @@ int main(int argc, char *argv[]) {
     }
 
     plugin_scan("./plugin",debug);
+    
+    plugin_read("./plugin", 0 ,debug);
 
     return 0;
 }
