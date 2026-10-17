@@ -5,7 +5,9 @@
 
 
 char *version = "0.0.2";
-int debug = 0;
+
+//debug first set
+int g_debug = 0;
 
 int plugin_scan(char *path, int debug){
 
@@ -101,7 +103,8 @@ int main(int argc, char *argv[]) {
                 return 0;
             }
             if (strcmp(argv[argv_loop], "-d") == 0) {
-                debug = 1;
+                //debug second set
+                g_debug = 1;
                 printf("system:version:%s\n", version);
             }
             if (strcmp(argv[argv_loop], "-v") == 0) {
@@ -111,13 +114,13 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (debug) {
+    if (g_debug) {
         printf("debug:plugin_system:start\n");
     }
 
-    plugin_scan("./plugin",debug);
+    plugin_scan("./plugin",g_debug);
     
-    plugin_read("./plugin", 0 ,debug);
+    plugin_read("./plugin", 0 ,g_debug);
 
     return 0;
 }
